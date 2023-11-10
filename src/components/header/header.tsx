@@ -1,53 +1,154 @@
 import React, { Component } from "react";
 import "./style.css";
-import { useMediaQuery } from "react-responsive";
+import {
+  AppBar,
+  Toolbar,
+  Container,
+  Typography,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Button,
+  Tooltip,
+  Avatar,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import AdbIcon from "@mui/icons-material/Adb";
+import Image from "next/image";
+
+const pages = ["Previous Seasons", "Community", "Store"];
+const settings = ["Profile", "My Orders", "Logout"];
 
 export default class Header extends Component<any, any> {
-    constructor(props: any) {
-        super(props);
-        this.state = { isMobile: false };
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
+  constructor(props: any) {
+    super(props);
+    this.state = { isMobile: false, anchorElNav: null, anchorElUser: null };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.handleOpenNavMenu = this.handleOpenNavMenu.bind(this);
+    this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this);
+    this.handleCloseNavMenu = this.handleCloseNavMenu.bind(this);
+    this.handleCloseUserMenu = this.handleCloseUserMenu.bind(this);
+  }
 
-    updateWindowDimensions() {
-        this.setState({ isMobile: window.screen.availWidth < 768 });
-    }
+  updateWindowDimensions() {
+    this.setState({ isMobile: window.screen.availWidth < 768 });
+  }
 
-    componentDidMount() {
-        window.addEventListener("resize", this.updateWindowDimensions);
-    }
+  componentDidMount() {
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
 
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWindowDimensions)
-    }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
 
-    render() {
-        return (
-            this.state.isMobile ? (
-                <img className="f1fanzone" alt="F1 Fan Zone" src="f1-fan-zone.png" />
-            ) : (
-                <div className="box">
-                    <header className="header">
-                        <div className="overlap">
-                            <div className="overlap-group">
-                                <img className="f1fanzone" alt="F1 Fan Zone" src="f1-fan-zone.png" />
-                                <div className="text-wrapper">SEASON 2023</div>
-                            </div>
-                            <div className="div">PREVIOUS SEASONS</div>
-                            <div className="text-wrapper-2">COMMUNITY</div>
-                            <div className="text-wrapper-3">STORE</div>
-                            <div className="LIVE">
-                                <div className="overlap-group-2">
-                                    <img className="polygon" alt="Polygon" src="polygon.svg" />
-                                    <div className="rectangle" />
-                                    <div className="text-wrapper-4">LIVE</div>
-                                    <div className="ellipse" />
-                                </div>
-                            </div>
-                        </div>
-                    </header>
-                </div>
-            )
-        );
-    }
-};
+  handleOpenNavMenu(event: React.MouseEvent<HTMLElement>) {
+    this.setState({ anchorElNav: event.currentTarget });
+  }
+
+  handleOpenUserMenu(event: React.MouseEvent<HTMLElement>) {
+    this.setState({ anchorElUser: event.currentTarget });
+  }
+
+  handleCloseNavMenu() {
+    this.setState({ anchorElNav: null });
+  }
+
+  handleCloseUserMenu() {
+    this.setState({ anchorElUser: null });
+  }
+
+  render() {
+    return (
+      <AppBar color="secondary" position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Image src="/f1-fan-zone.png" alt="logo" width={100} height={100} />
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={this.handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={this.state.anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(this.state.anchorElNav)}
+                onClose={this.handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={this.handleCloseNavMenu}>
+                    <Typography textAlign="center" color="primary">
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={this.handleCloseNavMenu}
+                  sx={{ my: 2, color: "primary", display: "block" }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={this.state.anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(this.state.anchorElUser)}
+                onClose={this.handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={this.handleCloseUserMenu}>
+                    <Typography textAlign="center" color="primary">
+                      {setting}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    );
+  }
+}
