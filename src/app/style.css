@@ -1,35 +1,43 @@
 .podium-card {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
 .races-card {
-    background-image: url(https://media.formula1.com/image/upload/f_auto/q_auto/v1677249930/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Las_Vegas_Circuit.png.transform/7col-retina/image.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url(https://media.formula1.com/image/upload/f_auto/q_auto/v1677249930/content/dam/fom-website/2018-redesign-assets/Circuit%20maps%2016x9/Las_Vegas_Circuit.png.transform/7col-retina/image.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .podium-card-actions {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .podium-card-bottom-text {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .podium-card-bottom-text-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .podium-card-bottom-text-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-self: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: end;
+}
+
+.centered {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

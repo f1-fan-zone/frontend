@@ -11,41 +11,19 @@ import {
 } from "@mui/material";
 import "./style.css";
 import theme from "@/app/theme";
+import { Driver } from "./classes/driver";
+import { ErgastApi } from "./api/ergast/ergast-api";
+import ReactLoading from "react-loading";
 
 interface IProps {}
 
 interface IState {
   currentDriver: number;
+  podium: Driver[];
+  showLoading: boolean;
 }
 
 export default class HomePage extends Component<IProps, IState> {
-  podium = [
-    {
-      emoji: "🥇",
-      firstName: "MAX",
-      lastName: "VERSTAPPEN",
-      points: 524,
-      image:
-        "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/verstappen.jpg.img.640.medium.jpg/1677069810695.jpg",
-    },
-    {
-      emoji: "🥈",
-      firstName: "SERGIO",
-      lastName: "PEREZ",
-      points: 258,
-      image:
-        "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/perez.jpg.img.640.medium.jpg/1677069810695.jpg",
-    },
-    {
-      emoji: "🥉",
-      firstName: "LEWIS",
-      lastName: "HAMILTON",
-      points: 226,
-      image:
-        "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/hamilton.jpg.img.640.medium.jpg/1677069810695.jpg",
-    },
-  ];
-
   getDriverPositionString(position: number) {
     switch (position) {
       case 0:
@@ -63,11 +41,26 @@ export default class HomePage extends Component<IProps, IState> {
     super(props);
     this.state = {
       currentDriver: 0,
+      podium: [
+        {
+          firstName: "Lewis",
+          lastName: "Hamilton",
+          imageUrl:
+            "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/Drivers/2018/hamilton.png.transform/2col/image.png",
+          points: 369,
+        } as Driver,
+      ],
+      showLoading: true,
     };
   }
 
+  async componentDidMount() {
+    let podium = await ErgastApi.getDriverStandings();
+    this.setState({ podium, showLoading: false });
+  }
+
   render() {
-    return (
+    return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
         <Header></Header>
         <Grid container spacing={2}>
@@ -77,7 +70,7 @@ export default class HomePage extends Component<IProps, IState> {
               className="podium-card"
               style={{
                 backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0) 40%, rgba(0, 0, 0, 1)), url(${
-                  this.podium[this.state.currentDriver].image
+                  this.state.podium[this.state.currentDriver].imageUrl
                 })`,
               }}
             >
@@ -128,10 +121,10 @@ export default class HomePage extends Component<IProps, IState> {
                 <div className="podium-card-bottom-text">
                   <div className="podium-card-bottom-text-left">
                     <Typography variant="h6" color="white">
-                      {this.podium[this.state.currentDriver].firstName}
+                      {this.state.podium[this.state.currentDriver].firstName}
                     </Typography>
                     <Typography variant="h5" color="white">
-                      {this.podium[this.state.currentDriver].lastName}
+                      {this.state.podium[this.state.currentDriver].lastName}
                     </Typography>
                   </div>
                   <div className="podium-card-bottom-text-right">
@@ -142,7 +135,7 @@ export default class HomePage extends Component<IProps, IState> {
                         alignSelf: "flex-end",
                       }}
                     >
-                      {this.podium[this.state.currentDriver].points} PTS
+                      {this.state.podium[this.state.currentDriver].points} PTS
                     </Typography>
                   </div>
                 </div>
@@ -172,6 +165,10 @@ export default class HomePage extends Component<IProps, IState> {
           </Grid>
         </Grid>
       </ThemeProvider>
+    ) : (
+      <div className="centered">
+        <ReactLoading type="spin" color="red" />
+      </div>
     );
   }
 }
