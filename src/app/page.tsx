@@ -20,6 +20,7 @@ interface IProps {}
 interface IState {
   currentDriver: number;
   podium: Driver[];
+  lastRace: any;
   showLoading: boolean;
 }
 
@@ -50,13 +51,15 @@ export default class HomePage extends Component<IProps, IState> {
           points: 369,
         } as Driver,
       ],
+      lastRace: {},
       showLoading: true,
     };
   }
 
   async componentDidMount() {
     let podium = await ErgastApi.getDriverStandings();
-    this.setState({ podium, showLoading: false });
+    let lastRace = await ErgastApi.getlastRace();
+    this.setState({ podium, lastRace, showLoading: false });
   }
 
   render() {
@@ -145,20 +148,17 @@ export default class HomePage extends Component<IProps, IState> {
           <Grid item xs={12} my={1} mx={2}>
             <Card sx={{ p: 2 }} className="races-card">
               <CardContent>
-                <Typography gutterBottom variant="h4">
-                  CURRENT RACE
+                <Typography gutterBottom variant="h2">
+                  LAST RACE
                 </Typography>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
                 <Typography variant="subtitle1" color="text.secondary">
-                  🇺🇸 LAS VEGAS GRAND PRIX
+                  {this.state.lastRace.raceName}
+                </Typography>
+                <Typography color="text.secondary">
+                  {this.state.lastRace.date} - {this.state.lastRace.time}
+                </Typography>
+                <Typography color="text.secondary">
+                  {this.state.lastRace.circuitName}
                 </Typography>
               </CardContent>
             </Card>

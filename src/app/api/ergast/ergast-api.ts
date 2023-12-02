@@ -1,4 +1,5 @@
 import { Driver } from "@/app/classes/driver";
+import { Race } from "@/app/classes/race";
 
 export class ErgastApi {
   public static API_URL = "https://ergast.com/api";
@@ -13,7 +14,6 @@ export class ErgastApi {
       data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
 
     return standings.map((driver: any) => {
-      console.log(driver.Driver);
       return {
         position: driver.position,
         points: driver.points,
@@ -27,5 +27,22 @@ export class ErgastApi {
         }.jpg.img.640.medium.jpg/1677069810695.jpg`,
       } as Driver;
     });
+  }
+
+  static async getlastRace(): Promise<any> {
+    const response = await fetch(
+      `${ErgastApi.API_URL}/f1/current/last/results.json`
+    );
+    const data = await response.json();
+
+    const race = data.MRData.RaceTable.Races[0];
+
+    return {
+      raceName: race.raceName.toUpperCase(),
+      date: race.date,
+      time: race.time.replace("Z", ""),
+      circuitName: race.Circuit.circuitName,
+      locality: race.Circuit.Location.locality,
+    } as Race;
   }
 }
