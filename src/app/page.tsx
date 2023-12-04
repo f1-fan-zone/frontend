@@ -14,13 +14,14 @@ import theme from "@/app/theme";
 import { Driver } from "./classes/driver";
 import { ErgastApi } from "./api/ergast/ergast-api";
 import ReactLoading from "react-loading";
+import { Race } from "./classes/race";
 
 interface IProps {}
 
 interface IState {
   currentDriver: number;
   podium: Driver[];
-  lastRace: any;
+  lastRace: Race;
   showLoading: boolean;
 }
 
@@ -42,16 +43,8 @@ export default class HomePage extends Component<IProps, IState> {
     super(props);
     this.state = {
       currentDriver: 0,
-      podium: [
-        {
-          firstName: "Lewis",
-          lastName: "Hamilton",
-          imageUrl:
-            "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/Drivers/2018/hamilton.png.transform/2col/image.png",
-          points: 369,
-        } as Driver,
-      ],
-      lastRace: {},
+      podium: [] as Driver[],
+      lastRace: {} as Race,
       showLoading: true,
     };
   }

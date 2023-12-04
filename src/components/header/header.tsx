@@ -16,8 +16,22 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
+import Link from "next/link";
 
-const pages = ["Previous Seasons", "Community", "Store"];
+const pages = [
+  {
+    name: "Previous Seasons",
+    href: "/previous-seasons",
+  },
+  {
+    name: "Community",
+    href: "/community",
+  },
+  {
+    name: "Store",
+    href: "/store",
+  },
+];
 const settings = ["Profile", "My Orders", "Logout"];
 
 export default class Header extends Component<any, any> {
@@ -64,7 +78,14 @@ export default class Header extends Component<any, any> {
       <AppBar color="secondary" position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Image src="/f1-fan-zone.png" alt="logo" width={100} height={100} />
+            <Link href="/">
+              <Image
+                src="/f1-fan-zone.png"
+                alt="logo"
+                width={100}
+                height={100}
+              />
+            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -95,23 +116,27 @@ export default class Header extends Component<any, any> {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={this.handleCloseNavMenu}>
-                    <Typography textAlign="center" color="primary">
-                      {page}
-                    </Typography>
+                  <MenuItem key={page.name} onClick={this.handleCloseNavMenu}>
+                    <Link href={page.href}>
+                      <Typography textAlign="center" color="primary">
+                        {page.name}
+                      </Typography>
+                    </Link>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={this.handleCloseNavMenu}
-                  sx={{ my: 2, color: "primary", display: "block" }}
-                >
-                  {page}
-                </Button>
+                <Link href={page.href} key={page.name}>
+                  <Button
+                    key={page.name}
+                    onClick={this.handleCloseNavMenu}
+                    sx={{ my: 2, color: "primary", display: "block" }}
+                  >
+                    {page.name}
+                  </Button>
+                </Link>
               ))}
             </Box>
 

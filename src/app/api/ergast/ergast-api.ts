@@ -1,5 +1,6 @@
 import { Driver } from "@/app/classes/driver";
 import { Race } from "@/app/classes/race";
+import { Season } from "@/app/classes/season";
 
 export class ErgastApi {
   public static API_URL = "https://ergast.com/api";
@@ -44,5 +45,68 @@ export class ErgastApi {
       circuitName: race.Circuit.circuitName,
       locality: race.Circuit.Location.locality,
     } as Race;
+  }
+
+  static async getAllSeasons(): Promise<any> {
+    const response = await fetch(
+      `${ErgastApi.API_URL}/f1/seasons.json?limit=100`
+    );
+    const data = await response.json();
+
+    const seasons = data.MRData.SeasonTable.Seasons;
+
+    const driverWinners = await ErgastApi.getDriverWinners();
+
+    const constructorWinners = await ErgastApi.getConstructorWinners();
+
+    return seasons.map((season: any) => {
+      const driverWinner = driverWinners.find(
+        (winner: any) => winner.season === season.season
+      );
+      const constructorWinner = constructorWinners.find(
+        (winner: any) => winner.season === season.season
+      );
+
+      return {
+        season: season.season,
+        url: season.url,
+        driverWinner: driverWinner ? driverWinner.name : "N/A",
+        constructorWinner: constructorWinner ? constructorWinner.name : "N/A",
+      } as Season;
+    });
+  }
+
+  static async getDriverWinners(): Promise<any> {
+    const response = await fetch(
+      `${ErgastApi.API_URL}/f1/driverStandings/1.json?limit=100`
+    );
+    const data = await response.json();
+
+    const seasons = data.MRData.StandingsTable.StandingsLists;
+
+    return seasons.map((season: any) => {
+      let driver = season.DriverStandings[0].Driver;
+      return {
+        season: season.season,
+        name: `${driver.givenName} ${driver.familyName}`,
+      };
+    });
+  }
+
+  static async getConstructorWinners(): Promise<any> {
+    const response = await fetch(
+      `${ErgastApi.API_URL}/f1/constructorStandings/1.json?limit=100`
+    );
+    const data = await response.json();
+
+    const seasons = data.MRData.StandingsTable.StandingsLists;
+
+    return seasons.map((season: any) => {
+      let constructor = season.ConstructorStandings[0].Constructor;
+      return {
+        season: season.season,
+        name: constructor.name,
+      };
+    });
   }
 }

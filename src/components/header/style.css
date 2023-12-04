@@ -1,3 +1,7 @@
 .box {
-    height: 76px;
+  height: 76px;
+}
+
+a {
+  text-decoration: none;
 }
