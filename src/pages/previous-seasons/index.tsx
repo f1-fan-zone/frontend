@@ -22,7 +22,7 @@ interface IState {
   seasons: Season[];
 }
 
-export default class HomePage extends Component<IProps, IState> {
+export default class PreviousSeasonsPage extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {

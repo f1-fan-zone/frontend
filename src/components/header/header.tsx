@@ -32,12 +32,43 @@ const pages = [
     href: "/store",
   },
 ];
-const settings = ["Profile", "My Orders", "Logout"];
+const settings = [
+  {
+    name: "Profile",
+    href: "/profile",
+    requireAuth: true,
+  },
+  {
+    name: "Settings",
+    href: "/settings",
+    requireAuth: true,
+  },
+  {
+    name: "Sign Out",
+    href: "/sign-out",
+    requireAuth: true,
+  },
+  {
+    name: "Sign In",
+    href: "/sign-in",
+    requireAuth: false,
+  },
+  {
+    name: "Sign Up",
+    href: "/sign-up",
+    requireAuth: false,
+  },
+];
 
 export default class Header extends Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = { isMobile: false, anchorElNav: null, anchorElUser: null };
+    this.state = {
+      isMobile: false,
+      anchorElNav: null,
+      anchorElUser: null,
+      loggedIn: false,
+    };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleOpenNavMenu = this.handleOpenNavMenu.bind(this);
     this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this);
@@ -51,6 +82,11 @@ export default class Header extends Component<any, any> {
 
   componentDidMount() {
     window.addEventListener("resize", this.updateWindowDimensions);
+
+    let user = localStorage.getItem("user");
+    if (user) {
+      this.setState({ loggedIn: true });
+    }
   }
 
   componentWillUnmount() {
@@ -143,7 +179,7 @@ export default class Header extends Component<any, any> {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="User" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -162,13 +198,25 @@ export default class Header extends Component<any, any> {
                 open={Boolean(this.state.anchorElUser)}
                 onClose={this.handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={this.handleCloseUserMenu}>
-                    <Typography textAlign="center" color="primary">
-                      {setting}
-                    </Typography>
-                  </MenuItem>
-                ))}
+                {settings.map((setting) => {
+                  if (
+                    (setting.requireAuth && this.state.loggedIn) ||
+                    (!setting.requireAuth && !this.state.loggedIn)
+                  ) {
+                    return (
+                      <MenuItem
+                        key={setting.name}
+                        onClick={this.handleCloseUserMenu}
+                      >
+                        <Link href={setting.href}>
+                          <Typography textAlign="center" color="primary">
+                            {setting.name}
+                          </Typography>
+                        </Link>
+                      </MenuItem>
+                    );
+                  }
+                })}
               </Menu>
             </Box>
           </Toolbar>
