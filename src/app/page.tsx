@@ -4,7 +4,6 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
-  CardMedia,
   Grid,
   ThemeProvider,
   Typography,
@@ -13,8 +12,8 @@ import "./style.css";
 import theme from "@/app/theme";
 import { Driver } from "./classes/driver";
 import { ErgastApi } from "./api/ergast/ergast-api";
-import ReactLoading from "react-loading";
 import { Race } from "./classes/race";
+import Loading from "@/components/loading/loading";
 
 interface IProps {}
 
@@ -159,9 +158,7 @@ export default class HomePage extends Component<IProps, IState> {
         </Grid>
       </ThemeProvider>
     ) : (
-      <div className="centered">
-        <ReactLoading type="spin" color="red" />
-      </div>
+      <Loading></Loading>
     );
   }
 }

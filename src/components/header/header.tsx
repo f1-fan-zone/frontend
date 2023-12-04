@@ -45,8 +45,12 @@ const settings = [
   },
   {
     name: "Sign Out",
-    href: "/sign-out",
+    href: "#",
     requireAuth: true,
+    onClick: () => {
+      localStorage.removeItem("user");
+      window.location.href = "/";
+    },
   },
   {
     name: "Sign In",
@@ -208,7 +212,10 @@ export default class Header extends Component<any, any> {
                         key={setting.name}
                         onClick={this.handleCloseUserMenu}
                       >
-                        <Link href={setting.href}>
+                        <Link
+                          href={setting.href}
+                          onClick={setting.onClick ? setting.onClick : () => {}}
+                        >
                           <Typography textAlign="center" color="primary">
                             {setting.name}
                           </Typography>

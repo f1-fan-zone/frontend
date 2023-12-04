@@ -4,16 +4,15 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
-  CardMedia,
   Grid,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import "./style.css";
 import theme from "@/app/theme";
-import ReactLoading from "react-loading";
 import { Season } from "@/app/classes/season";
 import { ErgastApi } from "@/app/api/ergast/ergast-api";
+import Loading from "@/components/loading/loading";
 
 interface IProps {}
 
@@ -62,9 +61,7 @@ export default class PreviousSeasonsPage extends Component<IProps, IState> {
         </Grid>
       </ThemeProvider>
     ) : (
-      <div className="centered">
-        <ReactLoading type="spin" color="red" />
-      </div>
+      <Loading></Loading>
     );
   }
 }

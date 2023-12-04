@@ -42,4 +42,18 @@ export class F1FanZoneApi {
 
     return await response.json();
   }
+
+  public static async getPostCategories(): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/post-categories`);
+
+    return await response.json();
+  }
+
+  public static async getPostsByCategory(postCategoryId: string): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/posts/category/${postCategoryId}`
+    );
+
+    return await response.json();
+  }
 }
