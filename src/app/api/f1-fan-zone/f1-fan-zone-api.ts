@@ -1,6 +1,18 @@
 export class F1FanZoneApi {
   public static API_URL = "http://localhost:4000";
 
+  public static async getUsers(): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/users`);
+
+    return await response.json();
+  }
+
+  public static async getUserById(userId: string): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/users/${userId}`);
+
+    return await response.json();
+  }
+
   public static async registerUser(
     username: string,
     password: string,
@@ -49,10 +61,28 @@ export class F1FanZoneApi {
     return await response.json();
   }
 
-  public static async getPostsByCategory(postCategoryId: string): Promise<any> {
+  public static async getPostsByPostCategoryId(
+    postCategoryId: string
+  ): Promise<any> {
     const response = await fetch(
       `${F1FanZoneApi.API_URL}/posts/category/${postCategoryId}`
     );
+
+    return await response.json();
+  }
+
+  public static async getPostCategoryById(
+    postCategoryId: string
+  ): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/post-categories/${postCategoryId}`
+    );
+
+    return await response.json();
+  }
+
+  public static async getPostById(postId: string): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/posts/${postId}`);
 
     return await response.json();
   }

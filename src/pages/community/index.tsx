@@ -33,25 +33,6 @@ export default class CommunityPage extends Component<IProps, IState> {
 
   async componentDidMount() {
     let postCategories = await F1FanZoneApi.getPostCategories();
-    /**
-     * {
-    "name": "News",
-    "description": "News about F1"
-},
-{
-    "name": "Rumors",
-    "description": "Rumors about F1"
-},
-{
-    "name": "Opinions",
-    "description": "Opinions about F1"
-},
-{
-    "name": "Other",
-    "description": "Other about F1"
-}
-
-     */
     this.setState({ postCategories });
     this.setState({ showLoading: false });
   }
@@ -61,8 +42,16 @@ export default class CommunityPage extends Component<IProps, IState> {
       <ThemeProvider theme={theme}>
         <Header></Header>
         <Grid container spacing={2}>
+          <Grid item xs={12} my={2} mx={2}>
+            <Typography variant="h4" gutterBottom>
+              Community
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              Join the conversation
+            </Typography>
+          </Grid>
           {this.state.postCategories.map((postCategory) => (
-            <Grid item xs={12} my={2} mx={2} key={postCategory._id}>
+            <Grid item xs={12} my={1} mx={2} key={postCategory._id}>
               <Link
                 href={`/community/${postCategory._id}`}
                 key={postCategory._id}
