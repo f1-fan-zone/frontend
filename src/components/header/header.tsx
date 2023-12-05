@@ -12,9 +12,10 @@ import {
   Button,
   Tooltip,
   Avatar,
+  Drawer,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
+import LoginIcon from "@mui/icons-material/Login";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -118,14 +119,6 @@ export default class Header extends Component<any, any> {
       <AppBar color="secondary" position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Link href="/">
-              <Image
-                src="/f1-fan-zone.png"
-                alt="logo"
-                width={100}
-                height={100}
-              />
-            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -137,24 +130,19 @@ export default class Header extends Component<any, any> {
               >
                 <MenuIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={this.state.anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
+              <Drawer
+                anchor="left"
                 open={Boolean(this.state.anchorElNav)}
                 onClose={this.handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
               >
+                <Link href="/">
+                  <Image
+                    src="/f1-fan-zone.png"
+                    alt="logo"
+                    width={90}
+                    height={68.2}
+                  />
+                </Link>
                 {pages.map((page) => (
                   <MenuItem key={page.name} onClick={this.handleCloseNavMenu}>
                     <Link href={page.href}>
@@ -164,9 +152,23 @@ export default class Header extends Component<any, any> {
                     </Link>
                   </MenuItem>
                 ))}
-              </Menu>
+              </Drawer>
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                alignContent: "center",
+              }}
+            >
+              <Link href="/">
+                <Image
+                  src="/f1-fan-zone.png"
+                  alt="logo"
+                  width={90}
+                  height={68.2}
+                />
+              </Link>
               {pages.map((page) => (
                 <Link href={page.href} key={page.name}>
                   <Button
@@ -179,52 +181,57 @@ export default class Header extends Component<any, any> {
                 </Link>
               ))}
             </Box>
-
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="User" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={this.state.anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(this.state.anchorElUser)}
-                onClose={this.handleCloseUserMenu}
-              >
-                {settings.map((setting) => {
-                  if (
-                    (setting.requireAuth && this.state.loggedIn) ||
-                    (!setting.requireAuth && !this.state.loggedIn)
-                  ) {
-                    return (
-                      <MenuItem
-                        key={setting.name}
-                        onClick={this.handleCloseUserMenu}
-                      >
-                        <Link
-                          href={setting.href}
-                          onClick={setting.onClick ? setting.onClick : () => {}}
-                        >
-                          <Typography textAlign="center" color="primary">
-                            {setting.name}
-                          </Typography>
-                        </Link>
-                      </MenuItem>
-                    );
-                  }
-                })}
-              </Menu>
+              {this.state.loggedIn ? (
+                <>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="User" />
+                    </IconButton>
+                  </Tooltip>
+                  <Drawer
+                    anchor="right"
+                    open={Boolean(this.state.anchorElUser)}
+                    onClose={this.handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => {
+                      if (
+                        (setting.requireAuth && this.state.loggedIn) ||
+                        (!setting.requireAuth && !this.state.loggedIn)
+                      ) {
+                        return (
+                          <MenuItem
+                            key={setting.name}
+                            onClick={this.handleCloseUserMenu}
+                          >
+                            <Link
+                              href={setting.href}
+                              onClick={
+                                setting.onClick ? setting.onClick : () => {}
+                              }
+                            >
+                              <Typography textAlign="center" color="primary">
+                                {setting.name}
+                              </Typography>
+                            </Link>
+                          </MenuItem>
+                        );
+                      }
+                    })}
+                  </Drawer>
+                </>
+              ) : (
+                <Tooltip title="Sign In">
+                  <IconButton
+                    onClick={() => {
+                      window.location.href = "/sign-in";
+                    }}
+                    sx={{ color: "primary" }}
+                  >
+                    <LoginIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
             </Box>
           </Toolbar>
         </Container>

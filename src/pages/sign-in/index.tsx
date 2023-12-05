@@ -65,13 +65,20 @@ export default class SignInPage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <Header></Header>
         <Grid
           container
+          display="flex"
           justifyContent="center"
           alignItems="center"
-          style={{ height: "100vh" }}
+          style={{ height: "85vh", padding: "0 10px" }}
         >
-          <Card>
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 Sign In
