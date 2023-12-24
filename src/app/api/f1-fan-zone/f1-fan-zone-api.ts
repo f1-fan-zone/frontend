@@ -1,5 +1,5 @@
 export class F1FanZoneApi {
-  public static API_URL = "http://localhost:4000";
+  public static API_URL = "https://f1-fan-zone-backend.onrender.com";
 
   public static async getUsers(): Promise<any> {
     const response = await fetch(`${F1FanZoneApi.API_URL}/users`);
