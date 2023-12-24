@@ -4,6 +4,7 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
+  Fab,
   Grid,
   Link,
   ThemeProvider,
@@ -17,6 +18,7 @@ import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 import { Post } from "@/app/classes/post";
 import { NextRouter, withRouter } from "next/router";
 import moment from "moment";
+import { Add, AddComment, PostAdd } from "@mui/icons-material";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -50,6 +52,12 @@ class CommunityPage extends Component<IProps, IState> {
       let posts = await F1FanZoneApi.getPostsByPostCategoryId(
         this.props.router.query.communityId as string
       );
+
+      // filter out posts that are replies
+      posts = posts.filter((p: { post?: string }) => {
+        return p.post === undefined;
+      });
+
       let users = await F1FanZoneApi.getUsers();
       this.setState({ postCategory, posts, users });
       this.setState({ showLoading: false });
@@ -97,6 +105,22 @@ class CommunityPage extends Component<IProps, IState> {
               </Link>
             </Grid>
           ))}
+        </Grid>
+        <Grid
+          container
+          spacing={2}
+          direction="row-reverse"
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+        >
+          <Link
+            href={`/new-post?postCategoryId=${this.state.postCategory._id}`}
+            underline="none"
+            className="fab"
+          >
+            <Fab color="primary" aria-label="add">
+              <Add />
+            </Fab>
+          </Link>
         </Grid>
       </ThemeProvider>
     ) : (

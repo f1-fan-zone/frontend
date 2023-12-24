@@ -6,4 +6,5 @@ export interface Post {
   publicationDate: Date;
   user: string;
   postCategory: string;
+  post?: string;
 }

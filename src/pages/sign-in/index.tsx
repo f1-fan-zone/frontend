@@ -5,8 +5,8 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
   Grid,
+  Link,
   TextField,
   ThemeProvider,
   Typography,
@@ -14,8 +14,6 @@ import {
 import "./style.css";
 import theme from "@/app/theme";
 import ReactLoading from "react-loading";
-import { Season } from "@/app/classes/season";
-import { ErgastApi } from "@/app/api/ergast/ergast-api";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 
 interface IProps {}
@@ -46,6 +44,18 @@ export default class SignInPage extends Component<IProps, IState> {
 
   async handleLogin() {
     this.setState({ submittingForm: true });
+
+    if (this.state.usernameOrEmail === "") {
+      alert("Please enter an username or email address.");
+      this.setState({ submittingForm: false });
+      return;
+    }
+
+    if (this.state.password === "") {
+      alert("Please enter a password.");
+      this.setState({ submittingForm: false });
+      return;
+    }
 
     let result = await F1FanZoneApi.loginUser(
       this.state.usernameOrEmail,
@@ -107,17 +117,26 @@ export default class SignInPage extends Component<IProps, IState> {
                   }}
                   disabled={this.state.submittingForm}
                 />
-                <Grid container justifyContent="center" my={2}>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      type="button"
-                      onClick={this.handleLogin}
-                      disabled={this.state.submittingForm}
-                    >
-                      Sign In
-                    </Button>
-                  </Grid>
+                <Grid
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                  my={2}
+                >
+                  <Button
+                    variant="contained"
+                    type="button"
+                    onClick={this.handleLogin}
+                    disabled={this.state.submittingForm}
+                  >
+                    Sign In
+                  </Button>
+                  <br />
+                  <Typography variant="caption">
+                    {"Don't have an account? "}
+                    <Link href="/sign-up">Sign Up</Link>!
+                  </Typography>
                 </Grid>
               </form>
             </CardContent>

@@ -7,6 +7,7 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  Link,
   TextField,
   ThemeProvider,
   Typography,
@@ -26,6 +27,7 @@ interface IState {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
   firstName: string;
   lastName: string;
 }
@@ -39,6 +41,7 @@ export default class SignUpPage extends Component<IProps, IState> {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
       firstName: "",
       lastName: "",
     };
@@ -52,6 +55,31 @@ export default class SignUpPage extends Component<IProps, IState> {
 
   async handleRegister() {
     this.setState({ submittingForm: true });
+
+    if (
+      !this.state.username ||
+      !this.state.email ||
+      !this.state.password ||
+      !this.state.confirmPassword ||
+      !this.state.firstName ||
+      !this.state.lastName
+    ) {
+      alert("Please fill out all fields");
+      this.setState({ submittingForm: false });
+      return;
+    }
+
+    if (this.state.password.length < 8) {
+      alert("Password must be at least 8 characters");
+      this.setState({ submittingForm: false });
+      return;
+    }
+
+    if (this.state.password !== this.state.confirmPassword) {
+      alert("Passwords do not match");
+      this.setState({ submittingForm: false });
+      return;
+    }
 
     let result = await F1FanZoneApi.registerUser(
       this.state.username,
@@ -74,13 +102,19 @@ export default class SignUpPage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <Header></Header>
         <Grid
           container
           justifyContent="center"
           alignItems="center"
-          style={{ height: "100vh" }}
+          style={{ height: "85vh", padding: "0 10px" }}
         >
-          <Card>
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 Sign Up
@@ -143,17 +177,38 @@ export default class SignUpPage extends Component<IProps, IState> {
                   }}
                   disabled={this.state.submittingForm}
                 />
-                <Grid container justifyContent="center" my={2}>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      type="button"
-                      onClick={this.handleRegister}
-                      disabled={this.state.submittingForm}
-                    >
-                      Sign Up
-                    </Button>
-                  </Grid>
+                <TextField
+                  label="Confirm Password"
+                  variant="standard"
+                  type="password"
+                  fullWidth
+                  margin="normal"
+                  value={this.state.confirmPassword}
+                  onChange={(e) => {
+                    this.setState({ confirmPassword: e.target.value });
+                  }}
+                  disabled={this.state.submittingForm}
+                />
+                <Grid
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                  my={2}
+                >
+                  <Button
+                    variant="contained"
+                    type="button"
+                    onClick={this.handleRegister}
+                    disabled={this.state.submittingForm}
+                  >
+                    Sign Up
+                  </Button>
+                  <br />
+                  <Typography variant="caption">
+                    Already have an account?{" "}
+                    <Link href="/sign-in">Sign In</Link>!
+                  </Typography>
                 </Grid>
               </form>
             </CardContent>

@@ -1,5 +1,10 @@
+import { Post } from "@/app/classes/post";
+
 export class F1FanZoneApi {
-  public static API_URL = "https://f1-fan-zone-backend.onrender.com";
+  public static API_URL =
+    process.env.NODE_ENV === "production"
+      ? "https://f1-fan-zone-backend.onrender.com"
+      : "http://localhost:3000";
 
   public static async getUsers(): Promise<any> {
     const response = await fetch(`${F1FanZoneApi.API_URL}/users`);
@@ -83,6 +88,26 @@ export class F1FanZoneApi {
 
   public static async getPostById(postId: string): Promise<any> {
     const response = await fetch(`${F1FanZoneApi.API_URL}/posts/${postId}`);
+
+    return await response.json();
+  }
+
+  public static async getPostCommentsByPostId(postId: string): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/posts/${postId}/comments`
+    );
+
+    return await response.json();
+  }
+
+  public static async createPost(post: Post): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
 
     return await response.json();
   }

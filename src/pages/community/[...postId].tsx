@@ -4,6 +4,7 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
+  Fab,
   Grid,
   Link,
   ThemeProvider,
@@ -15,8 +16,11 @@ import Loading from "@/components/loading/loading";
 import { PostCategory } from "@/app/classes/post-category";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 import { Post } from "@/app/classes/post";
+import Image from "next/image";
 import { NextRouter, withRouter } from "next/router";
 import moment from "moment";
+import { AddComment } from "@mui/icons-material";
+import { User } from "@/app/classes/user";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -29,6 +33,8 @@ interface IState {
   postCategory: PostCategory;
   post: Post;
   postAuthor: any;
+  postComments: Post[];
+  users: User[];
 }
 
 class PostPage extends Component<IProps, IState> {
@@ -39,6 +45,8 @@ class PostPage extends Component<IProps, IState> {
       postCategory: {} as PostCategory,
       post: {} as Post,
       postAuthor: {} as any,
+      postComments: [] as Post[],
+      users: [] as User[],
     };
   }
 
@@ -51,7 +59,11 @@ class PostPage extends Component<IProps, IState> {
         this.props.router.query.postId[2] as string
       );
       let postAuthor = await F1FanZoneApi.getUserById(post.user);
-      this.setState({ postCategory, post, postAuthor });
+      let postComments = await F1FanZoneApi.getPostCommentsByPostId(
+        this.props.router.query.postId[2] as string
+      );
+      let users = await F1FanZoneApi.getUsers();
+      this.setState({ postCategory, post, postAuthor, postComments, users });
       this.setState({ showLoading: false });
     }
   }
@@ -64,10 +76,25 @@ class PostPage extends Component<IProps, IState> {
         <Header></Header>
         <Grid container spacing={2}>
           <Grid item xs={12} my={2} mx={2}>
-            <Typography variant="h3" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               {this.state.post.title}
             </Typography>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="body1" gutterBottom>
+              {this.state.post.content}
+            </Typography>
+            {this.state.post.imageUrl ? (
+              <Image
+                src={`data:image/*;base64,${this.state.post.imageUrl}`}
+                alt="Uploaded"
+                width="0"
+                height="0"
+                sizes="100vw"
+                style={{ width: "100%", height: "auto" }}
+              />
+            ) : (
+              ""
+            )}
+            <Typography variant="caption" color="text.secondary">
               Posted by{" "}
               <b>
                 {this.state.postAuthor.firstName}{" "}
@@ -78,18 +105,74 @@ class PostPage extends Component<IProps, IState> {
                 this.state.post.publicationDate.toLocaleString()
               ).fromNow()}
             </Typography>
-            <br />
-            <Typography variant="body1" gutterBottom>
-              {this.state.post.content}
-            </Typography>
           </Grid>
+
+          <Grid item xs={12} my={2} mx={2}>
+            <Typography variant="h6" gutterBottom>
+              Comments ({this.state.postComments.length})
+            </Typography>
+            {this.state.postComments.map((comment) => {
+              const author = this.state.users.find(
+                (user) => user._id === comment.user
+              ) as User;
+
+              return (
+                <Card variant="outlined" sx={{ mb: 2 }} key={comment._id}>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      {comment.title}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {comment.content}
+                    </Typography>
+                    {comment.imageUrl ? (
+                      <Image
+                        src={`data:image/*;base64,${comment.imageUrl}`}
+                        alt="Uploaded"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    <Typography variant="caption" color="text.secondary">
+                      Posted by{" "}
+                      <b>
+                        {author.firstName} {author.lastName} (@
+                        {author.username}){" "}
+                      </b>
+                      {moment(
+                        comment.publicationDate.toLocaleString()
+                      ).fromNow()}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2}
+          direction="row-reverse"
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+        >
+          <Link
+            href={`/new-post?postCategoryId=${this.state.postCategory._id}&replyTo=${this.state.post._id}`}
+            underline="none"
+            className="fab"
+          >
+            <Fab color="primary" aria-label="add">
+              <AddComment />
+            </Fab>
+          </Link>
         </Grid>
       </ThemeProvider>
     ) : (
       <Loading></Loading>
     );
-
-    return <Loading></Loading>;
   }
 }
 
