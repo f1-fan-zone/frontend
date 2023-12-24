@@ -54,8 +54,8 @@ class CommunityPage extends Component<IProps, IState> {
       );
 
       // filter out posts that are replies
-      posts = posts.filter((p: { post?: string }) => {
-        return p.post === undefined;
+      posts = posts.filter((p: Post) => {
+        return p.post === undefined || p.post === null;
       });
 
       let users = await F1FanZoneApi.getUsers();
