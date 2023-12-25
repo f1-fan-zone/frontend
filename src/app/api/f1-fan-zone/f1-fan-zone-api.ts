@@ -18,6 +18,14 @@ export class F1FanZoneApi {
     return await response.json();
   }
 
+  public static async getUserByUsername(username: string): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/users/profile/${username}`,
+    );
+
+    return await response.json();
+  }
+
   public static async registerUser(
     username: string,
     password: string,

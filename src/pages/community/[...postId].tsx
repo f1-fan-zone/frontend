@@ -96,11 +96,13 @@ class PostPage extends Component<IProps, IState> {
             )}
             <Typography variant="caption" color="text.secondary">
               Posted by{" "}
-              <b>
-                {this.state.postAuthor.firstName}{" "}
-                {this.state.postAuthor.lastName} (@
-                {this.state.postAuthor.username}){" "}
-              </b>
+              <Link href={`/profile/${this.state.postAuthor.username}`}>
+                <b>
+                  {this.state.postAuthor.firstName}{" "}
+                  {this.state.postAuthor.lastName} (@
+                  {this.state.postAuthor.username}){" "}
+                </b>
+              </Link>
               {moment(
                 this.state.post.publicationDate.toLocaleString(),
               ).fromNow()}
@@ -139,10 +141,12 @@ class PostPage extends Component<IProps, IState> {
                     )}
                     <Typography variant="caption" color="text.secondary">
                       Posted by{" "}
-                      <b>
-                        {author.firstName} {author.lastName} (@
-                        {author.username}){" "}
-                      </b>
+                      <Link href={`/profile/${author.username}`}>
+                        <b>
+                          {author.firstName} {author.lastName} (@
+                          {author.username}){" "}
+                        </b>
+                      </Link>
                       {moment(
                         comment.publicationDate.toLocaleString(),
                       ).fromNow()}
