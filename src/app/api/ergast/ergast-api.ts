@@ -7,7 +7,7 @@ export class ErgastApi {
 
   static async getDriverStandings(): Promise<Driver[]> {
     const response = await fetch(
-      `${ErgastApi.API_URL}/f1/current/driverStandings.json`
+      `${ErgastApi.API_URL}/f1/current/driverStandings.json`,
     );
     const data = await response.json();
 
@@ -32,7 +32,7 @@ export class ErgastApi {
 
   static async getlastRace(): Promise<any> {
     const response = await fetch(
-      `${ErgastApi.API_URL}/f1/current/last/results.json`
+      `${ErgastApi.API_URL}/f1/current/last/results.json`,
     );
     const data = await response.json();
 
@@ -49,7 +49,7 @@ export class ErgastApi {
 
   static async getAllSeasons(): Promise<any> {
     const response = await fetch(
-      `${ErgastApi.API_URL}/f1/seasons.json?limit=100`
+      `${ErgastApi.API_URL}/f1/seasons.json?limit=100`,
     );
     const data = await response.json();
 
@@ -61,10 +61,10 @@ export class ErgastApi {
 
     return seasons.map((season: any) => {
       const driverWinner = driverWinners.find(
-        (winner: any) => winner.season === season.season
+        (winner: any) => winner.season === season.season,
       );
       const constructorWinner = constructorWinners.find(
-        (winner: any) => winner.season === season.season
+        (winner: any) => winner.season === season.season,
       );
 
       return {
@@ -78,7 +78,7 @@ export class ErgastApi {
 
   static async getDriverWinners(): Promise<any> {
     const response = await fetch(
-      `${ErgastApi.API_URL}/f1/driverStandings/1.json?limit=100`
+      `${ErgastApi.API_URL}/f1/driverStandings/1.json?limit=100`,
     );
     const data = await response.json();
 
@@ -95,7 +95,7 @@ export class ErgastApi {
 
   static async getConstructorWinners(): Promise<any> {
     const response = await fetch(
-      `${ErgastApi.API_URL}/f1/constructorStandings/1.json?limit=100`
+      `${ErgastApi.API_URL}/f1/constructorStandings/1.json?limit=100`,
     );
     const data = await response.json();
 

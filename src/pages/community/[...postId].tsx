@@ -53,14 +53,14 @@ class PostPage extends Component<IProps, IState> {
   async getData() {
     if (this.state.showLoading && this.props.router.query.postId) {
       let postCategory = await F1FanZoneApi.getPostCategoryById(
-        this.props.router.query.postId[0] ?? ("" as string)
+        this.props.router.query.postId[0] ?? ("" as string),
       );
       let post = await F1FanZoneApi.getPostById(
-        this.props.router.query.postId[2] as string
+        this.props.router.query.postId[2] as string,
       );
       let postAuthor = await F1FanZoneApi.getUserById(post.user);
       let postComments = await F1FanZoneApi.getPostCommentsByPostId(
-        this.props.router.query.postId[2] as string
+        this.props.router.query.postId[2] as string,
       );
       let users = await F1FanZoneApi.getUsers();
       this.setState({ postCategory, post, postAuthor, postComments, users });
@@ -102,7 +102,7 @@ class PostPage extends Component<IProps, IState> {
                 {this.state.postAuthor.username}){" "}
               </b>
               {moment(
-                this.state.post.publicationDate.toLocaleString()
+                this.state.post.publicationDate.toLocaleString(),
               ).fromNow()}
             </Typography>
           </Grid>
@@ -113,7 +113,7 @@ class PostPage extends Component<IProps, IState> {
             </Typography>
             {this.state.postComments.map((comment) => {
               const author = this.state.users.find(
-                (user) => user._id === comment.user
+                (user) => user._id === comment.user,
               ) as User;
 
               return (
@@ -144,7 +144,7 @@ class PostPage extends Component<IProps, IState> {
                         {author.username}){" "}
                       </b>
                       {moment(
-                        comment.publicationDate.toLocaleString()
+                        comment.publicationDate.toLocaleString(),
                       ).fromNow()}
                     </Typography>
                   </CardContent>

@@ -59,7 +59,7 @@ export default class SignInPage extends Component<IProps, IState> {
 
     let result = await F1FanZoneApi.loginUser(
       this.state.usernameOrEmail,
-      this.state.password
+      this.state.password,
     );
 
     if (result.message) {

@@ -23,7 +23,7 @@ export class F1FanZoneApi {
     password: string,
     email: string,
     firstName: string,
-    lastName: string
+    lastName: string,
   ): Promise<any> {
     const response = await fetch(`${F1FanZoneApi.API_URL}/users/register`, {
       method: "POST",
@@ -44,7 +44,7 @@ export class F1FanZoneApi {
 
   public static async loginUser(
     usernameOrEmail: string,
-    password: string
+    password: string,
   ): Promise<any> {
     const response = await fetch(`${F1FanZoneApi.API_URL}/users/login`, {
       method: "POST",
@@ -67,20 +67,20 @@ export class F1FanZoneApi {
   }
 
   public static async getPostsByPostCategoryId(
-    postCategoryId: string
+    postCategoryId: string,
   ): Promise<any> {
     const response = await fetch(
-      `${F1FanZoneApi.API_URL}/posts/category/${postCategoryId}`
+      `${F1FanZoneApi.API_URL}/posts/category/${postCategoryId}`,
     );
 
     return await response.json();
   }
 
   public static async getPostCategoryById(
-    postCategoryId: string
+    postCategoryId: string,
   ): Promise<any> {
     const response = await fetch(
-      `${F1FanZoneApi.API_URL}/post-categories/${postCategoryId}`
+      `${F1FanZoneApi.API_URL}/post-categories/${postCategoryId}`,
     );
 
     return await response.json();
@@ -94,7 +94,7 @@ export class F1FanZoneApi {
 
   public static async getPostCommentsByPostId(postId: string): Promise<any> {
     const response = await fetch(
-      `${F1FanZoneApi.API_URL}/posts/${postId}/comments`
+      `${F1FanZoneApi.API_URL}/posts/${postId}/comments`,
     );
 
     return await response.json();

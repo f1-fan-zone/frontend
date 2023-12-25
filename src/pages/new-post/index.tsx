@@ -96,16 +96,23 @@ class NewPostPage extends Component<IProps, IState> {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
 
+      if (params.get("postCategoryId") === null) {
+        this.props.router.push("/community");
+        return;
+      }
+
       if (this.state.showLoading && params.get("postCategoryId") !== null) {
         let postCategory = await F1FanZoneApi.getPostCategoryById(
-          params.get("postCategoryId") ?? ("" as string)
+          params.get("postCategoryId") ?? ("" as string),
         );
+
         this.setState({ postCategory });
 
         if (params.get("replyTo") !== null) {
           let post = await F1FanZoneApi.getPostById(
-            params.get("replyTo") as string
+            params.get("replyTo") as string,
           );
+
           this.setState({ replyTo: post });
         }
 
@@ -141,7 +148,7 @@ class NewPostPage extends Component<IProps, IState> {
       this.props.router.push(
         `/community/${this.state.postCategory._id}/post/${
           this.state.replyTo ? this.state.replyTo._id : createdPost._id
-        }`
+        }`,
       );
     } catch (error) {
       console.log(error);

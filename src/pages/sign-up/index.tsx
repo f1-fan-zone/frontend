@@ -86,7 +86,7 @@ export default class SignUpPage extends Component<IProps, IState> {
       this.state.password,
       this.state.email,
       this.state.firstName,
-      this.state.lastName
+      this.state.lastName,
     );
 
     if (result.message) {

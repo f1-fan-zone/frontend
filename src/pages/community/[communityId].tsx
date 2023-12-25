@@ -47,10 +47,10 @@ class CommunityPage extends Component<IProps, IState> {
   async getData() {
     if (this.state.showLoading) {
       let postCategory = await F1FanZoneApi.getPostCategoryById(
-        this.props.router.query.communityId as string
+        this.props.router.query.communityId as string,
       );
       let posts = await F1FanZoneApi.getPostsByPostCategoryId(
-        this.props.router.query.communityId as string
+        this.props.router.query.communityId as string,
       );
 
       // filter out posts that are replies
