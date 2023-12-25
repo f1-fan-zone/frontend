@@ -19,6 +19,7 @@ import { Post } from "@/app/classes/post";
 import { NextRouter, withRouter } from "next/router";
 import moment from "moment";
 import { Add, AddComment, PostAdd } from "@mui/icons-material";
+import { User } from "@/app/classes/user";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -30,7 +31,7 @@ interface IState {
   showLoading: boolean;
   postCategory: PostCategory;
   posts: Post[];
-  users: any[];
+  users: User[];
 }
 
 class CommunityPage extends Component<IProps, IState> {
@@ -40,7 +41,7 @@ class CommunityPage extends Component<IProps, IState> {
       showLoading: true,
       postCategory: {} as PostCategory,
       posts: [] as Post[],
-      users: [] as any[],
+      users: [] as User[],
     };
   }
 
