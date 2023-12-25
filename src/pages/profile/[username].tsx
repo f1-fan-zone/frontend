@@ -81,43 +81,6 @@ class ProfilePage extends Component<IProps, IState> {
                 </Typography>
               </CardContent>
             </Card>
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h5">
-                  Orders
-                </Typography>
-                {this.state.user.orders.length > 0 ? (
-                  this.state.user.orders.map((order: any) => {
-                    return (
-                      <Card key={order._id}>
-                        <CardContent>
-                          <Typography variant="h6" component="h6">
-                            {order.orderDate}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.totalPrice}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.status}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.paymentMethod}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.deliveryMethod}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.deliveryAddress}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    );
-                  })
-                ) : (
-                  <Typography variant="subtitle1">No orders</Typography>
-                )}
-              </CardContent>
-            </Card>
           </Grid>
         </Grid>
       </ThemeProvider>

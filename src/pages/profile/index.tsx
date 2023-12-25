@@ -73,7 +73,7 @@ class ProfilePage extends Component<IProps, IState> {
             <Card>
               <CardContent>
                 <Typography variant="h4" component="h4">
-                  Profile
+                  Your Profile
                 </Typography>
                 <br />
                 <Typography variant="h5" component="h5">
