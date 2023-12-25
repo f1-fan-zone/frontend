@@ -74,6 +74,12 @@ export class F1FanZoneApi {
     return await response.json();
   }
 
+  public static async getProductCategories(): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/product-categories`);
+
+    return await response.json();
+  }
+
   public static async getPostsByPostCategoryId(
     postCategoryId: string,
   ): Promise<any> {
@@ -89,6 +95,16 @@ export class F1FanZoneApi {
   ): Promise<any> {
     const response = await fetch(
       `${F1FanZoneApi.API_URL}/post-categories/${postCategoryId}`,
+    );
+
+    return await response.json();
+  }
+
+  public static async getProductCategoryById(
+    productCategoryId: string,
+  ): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/product-categories/${productCategoryId}`,
     );
 
     return await response.json();

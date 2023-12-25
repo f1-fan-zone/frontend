@@ -64,6 +64,10 @@ export default class Loading extends Component<any, any> {
 
   componentDidMount() {
     this.setState({ randomFact: this.getRandomFact() });
+
+    setInterval(() => {
+      this.setState({ randomFact: this.getRandomFact() });
+    }, 5000);
   }
 
   render() {

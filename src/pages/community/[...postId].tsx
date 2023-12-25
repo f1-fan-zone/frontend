@@ -79,7 +79,19 @@ class PostPage extends Component<IProps, IState> {
             <Typography variant="h4" gutterBottom>
               {this.state.post.title}
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="caption">
+              Posted in{" "}
+              <Link href={`/community/${this.state.postCategory._id}`}>
+                {this.state.postCategory.name}
+              </Link>
+            </Typography>
+            <br />
+            <br />
+            <Typography
+              variant="body1"
+              gutterBottom
+              style={{ whiteSpace: "pre-line" }}
+            >
               {this.state.post.content}
             </Typography>
             {this.state.post.imageUrl ? (
@@ -124,7 +136,11 @@ class PostPage extends Component<IProps, IState> {
                     <Typography variant="h6" gutterBottom>
                       {comment.title}
                     </Typography>
-                    <Typography variant="body1" gutterBottom>
+                    <Typography
+                      variant="body1"
+                      gutterBottom
+                      style={{ whiteSpace: "pre-line" }}
+                    >
                       {comment.content}
                     </Typography>
                     {comment.imageUrl ? (

@@ -79,40 +79,48 @@ class CommunityPage extends Component<IProps, IState> {
               {this.state.postCategory.description}
             </Typography>
           </Grid>
-          {this.state.posts.map((post) => {
-            let postAuthor = this.state.users.find(
-              (u) => u._id === post.user,
-            ) as any;
+          {this.state.posts.length > 0 ? (
+            this.state.posts.map((post) => {
+              let postAuthor = this.state.users.find(
+                (u) => u._id === post.user,
+              ) as any;
 
-            return (
-              <Grid item xs={12} my={1} mx={2} key={post._id}>
-                <Link
-                  href={`/community/${this.state.postCategory._id}/post/${post._id}`}
-                  key={post._id}
-                >
-                  <Card key={post._id}>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {post.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Posted by{" "}
-                        <Link href={`/profile/${postAuthor.username}`}>
-                          <b>
-                            {postAuthor.firstName} {postAuthor.lastName} (@
-                            {postAuthor.username}){" "}
-                          </b>
-                        </Link>{" "}
-                        {moment(
-                          post.publicationDate.toLocaleString(),
-                        ).fromNow()}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </Grid>
-            );
-          })}
+              return (
+                <Grid item xs={12} my={1} mx={2} key={post._id}>
+                  <Link
+                    href={`/community/${this.state.postCategory._id}/post/${post._id}`}
+                    key={post._id}
+                  >
+                    <Card key={post._id}>
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {post.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Posted by{" "}
+                          <Link href={`/profile/${postAuthor.username}`}>
+                            <b>
+                              {postAuthor.firstName} {postAuthor.lastName} (@
+                              {postAuthor.username}){" "}
+                            </b>
+                          </Link>{" "}
+                          {moment(
+                            post.publicationDate.toLocaleString(),
+                          ).fromNow()}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </Grid>
+              );
+            })
+          ) : (
+            <Grid item xs={12} my={1} mx={2}>
+              <Typography variant="body2" color="text.secondary">
+                No posts yet. Be the first one to post!
+              </Typography>
+            </Grid>
+          )}
         </Grid>
         <Grid
           container
