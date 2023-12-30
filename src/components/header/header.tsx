@@ -45,6 +45,11 @@ const settings = [
     requireAuth: true,
   },
   {
+    name: "Shopping Cart ({{count}})",
+    href: "/shopping-cart",
+    requireAuth: true,
+  },
+  {
     name: "Sign Out",
     href: "#",
     requireAuth: true,
@@ -112,6 +117,36 @@ export default class Header extends Component<any, any> {
 
   handleCloseUserMenu() {
     this.setState({ anchorElUser: null });
+  }
+
+  renderSettingName(
+    setting:
+      | {
+          name: string;
+          href: string;
+          requireAuth: boolean;
+          onClick?: undefined;
+        }
+      | {
+          name: string;
+          href: string;
+          requireAuth: boolean;
+          onClick: () => void;
+        },
+  ): React.ReactNode {
+    let user = localStorage.getItem("user");
+    if (!user) {
+      return setting.name;
+    }
+
+    let cart = localStorage.getItem("cart");
+    let cartItems = cart ? JSON.parse(cart) : [];
+    let count = 0;
+    cartItems.forEach((item: any) => {
+      count += item.count;
+    });
+
+    return setting.name.replace("{{count}}", count.toString());
   }
 
   render() {
@@ -211,7 +246,9 @@ export default class Header extends Component<any, any> {
                               }
                             >
                               <Typography textAlign="center" color="primary">
-                                {setting.name}
+                                {setting.name.includes("{{")
+                                  ? this.renderSettingName(setting)
+                                  : setting.name}
                               </Typography>
                             </Link>
                           </MenuItem>

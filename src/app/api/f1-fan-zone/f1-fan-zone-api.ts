@@ -126,6 +126,14 @@ export class F1FanZoneApi {
     return await response.json();
   }
 
+  public static async getProductById(productId: string): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/products/${productId}`,
+    );
+
+    return await response.json();
+  }
+
   public static async getPostCommentsByPostId(postId: string): Promise<any> {
     const response = await fetch(
       `${F1FanZoneApi.API_URL}/posts/${postId}/comments`,

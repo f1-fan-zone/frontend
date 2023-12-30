@@ -1,0 +1,11 @@
+body {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.imageDiv {
+  object-fit: contain;
+}
