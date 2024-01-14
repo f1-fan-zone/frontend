@@ -7,7 +7,6 @@ import {
   Typography,
   Box,
   IconButton,
-  Menu,
   MenuItem,
   Button,
   Tooltip,
@@ -142,9 +141,12 @@ export default class Header extends Component<any, any> {
     let cart = localStorage.getItem("cart");
     let cartItems = cart ? JSON.parse(cart) : [];
     let count = 0;
-    cartItems.forEach((item: any) => {
-      count += item.count;
-    });
+
+    if (cartItems.length > 0) {
+      cartItems.forEach((item: any) => {
+        count += item.count;
+      });
+    }
 
     return setting.name.replace("{{count}}", count.toString());
   }

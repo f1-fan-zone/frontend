@@ -1,28 +1,20 @@
 "use client";
 import Header from "@/components/header/header";
-import { ChangeEventHandler, Component } from "react";
+import { Component } from "react";
 import {
   Card,
   CardContent,
   CardMedia,
   Fab,
   Grid,
-  Link,
-  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import "./style.css";
 import theme from "@/app/theme";
 import Loading from "@/components/loading/loading";
-import { PostCategory } from "@/app/classes/post-category";
-import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
-import { Post } from "@/app/classes/post";
-import Image from "next/image";
 import { NextRouter, withRouter } from "next/router";
-import { AddComment, PhotoCamera } from "@mui/icons-material";
 import React from "react";
-import { Carter_One } from "next/font/google";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -181,6 +173,21 @@ class ShoppingCartPage extends Component<IProps, IState> {
                             : Number(0).toFixed(2)}
                         </b>
                       </Typography>
+                      {Object.keys(this.state.cart).length > 0 ? (
+                        <>
+                          <br />
+                          <Fab
+                            variant="extended"
+                            color="primary"
+                            aria-label="add"
+                            onClick={() => this.props.router.push("/checkout")}
+                          >
+                            Checkout
+                          </Fab>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
                   </Grid>
                 </CardContent>

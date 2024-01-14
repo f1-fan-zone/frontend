@@ -4,23 +4,18 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
-  Fab,
   Grid,
-  Link,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import "./style.css";
 import theme from "@/app/theme";
 import Loading from "@/components/loading/loading";
-import { PostCategory } from "@/app/classes/post-category";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
-import { Post } from "@/app/classes/post";
-import Image from "next/image";
 import { NextRouter, withRouter } from "next/router";
 import moment from "moment";
-import { AddComment } from "@mui/icons-material";
 import { User } from "@/app/classes/user";
+import { Order } from "@/app/classes/order";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -31,6 +26,7 @@ interface IProps extends WithRouterProps {}
 interface IState {
   showLoading: boolean;
   user: User;
+  orders: Order[];
 }
 
 class ProfilePage extends Component<IProps, IState> {
@@ -39,6 +35,7 @@ class ProfilePage extends Component<IProps, IState> {
     this.state = {
       showLoading: true,
       user: {} as User,
+      orders: [] as Order[],
     };
   }
 
@@ -54,8 +51,11 @@ class ProfilePage extends Component<IProps, IState> {
 
         let userObject = JSON.parse(user);
 
+        let orders = await F1FanZoneApi.getUserOrders(userObject._id);
+
         this.setState({
           user: userObject as User,
+          orders: orders as Order[],
           showLoading: false,
         });
       }
@@ -89,28 +89,23 @@ class ProfilePage extends Component<IProps, IState> {
                 <Typography variant="h5" component="h5">
                   Orders
                 </Typography>
-                {this.state.user.orders.length > 0 ? (
-                  this.state.user.orders.map((order: any) => {
+                {this.state.orders.length > 0 ? (
+                  this.state.orders.map((order: any) => {
                     return (
                       <Card key={order._id}>
                         <CardContent>
                           <Typography variant="h6" component="h6">
-                            {order.orderDate}
+                            {order.orderDate
+                              ? moment(order.orderDate).format(
+                                  "DD/MM/YYYY HH:mm",
+                                )
+                              : ""}
                           </Typography>
                           <Typography variant="h6" component="h6">
-                            {order.totalPrice}
+                            €{order.totalPrice}
                           </Typography>
                           <Typography variant="h6" component="h6">
-                            {order.status}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.paymentMethod}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.deliveryMethod}
-                          </Typography>
-                          <Typography variant="h6" component="h6">
-                            {order.deliveryAddress}
+                            Paid with {order.paymentMethod}
                           </Typography>
                         </CardContent>
                       </Card>

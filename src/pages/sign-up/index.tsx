@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
   Grid,
   Link,
   TextField,
@@ -15,8 +14,6 @@ import {
 import "./style.css";
 import theme from "@/app/theme";
 import ReactLoading from "react-loading";
-import { Season } from "@/app/classes/season";
-import { ErgastApi } from "@/app/api/ergast/ergast-api";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 
 interface IProps {}

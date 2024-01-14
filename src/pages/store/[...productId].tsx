@@ -1,13 +1,10 @@
 "use client";
 import Header from "@/components/header/header";
-import React, { Component, MouseEventHandler } from "react";
+import React, { Component } from "react";
 import {
   Button,
-  Card,
-  CardContent,
   Fab,
   Grid,
-  IconButton,
   Link,
   Snackbar,
   ThemeProvider,
@@ -16,17 +13,12 @@ import {
 import "./style.css";
 import theme from "@/app/theme";
 import Loading from "@/components/loading/loading";
-import { PostCategory } from "@/app/classes/post-category";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
-import { Post } from "@/app/classes/post";
 import Image from "next/image";
 import { NextRouter, withRouter } from "next/router";
-import moment from "moment";
-import { AddComment, AddShoppingCart, Remove } from "@mui/icons-material";
-import { User } from "@/app/classes/user";
+import { AddShoppingCart } from "@mui/icons-material";
 import { Product } from "@/app/classes/product";
 import { ProductCategory } from "@/app/classes/product-category";
-import { Thasadith } from "next/font/google";
 
 interface WithRouterProps {
   router: NextRouter;
@@ -82,19 +74,19 @@ class PostPage extends Component<IProps, IState> {
     let product = this.state.product;
     let productExists = false;
 
-    cartItems.forEach((item: any) => {
-      if (item._id === product._id) {
-        productExists = true;
-        item.count++;
-      } else {
-        cartItems.push({
-          ...product,
-          count: 1,
-        });
-      }
-    });
-
-    if (cartItems.length === 0) {
+    if (cartItems.length > 0) {
+      cartItems.forEach((item: any) => {
+        if (item._id === product._id) {
+          productExists = true;
+          item.count++;
+        } else {
+          cartItems.push({
+            ...product,
+            count: 1,
+          });
+        }
+      });
+    } else {
       cartItems.push({
         ...product,
         count: 1,
@@ -119,11 +111,13 @@ class PostPage extends Component<IProps, IState> {
     let product = this.state.product;
     let productExists = false;
 
-    cartItems.forEach((item: any) => {
-      if (item._id === product._id) {
-        productExists = true;
-      }
-    });
+    if (cartItems.length > 0) {
+      cartItems.forEach((item: any) => {
+        if (item._id === product._id) {
+          productExists = true;
+        }
+      });
+    }
 
     return productExists;
   }
@@ -134,11 +128,13 @@ class PostPage extends Component<IProps, IState> {
     let product = this.state.product;
     let productCount = 0;
 
-    cartItems.forEach((item: any) => {
-      if (item._id === product._id) {
-        productCount = item.count;
-      }
-    });
+    if (cartItems.length > 0) {
+      cartItems.forEach((item: any) => {
+        if (item._id === product._id) {
+          productCount = item.count;
+        }
+      });
+    }
 
     return productCount;
   }
@@ -149,11 +145,13 @@ class PostPage extends Component<IProps, IState> {
     let product = this.state.product;
     let productCount = 0;
 
-    cartItems.forEach((item: any) => {
-      if (item._id === product._id) {
-        productCount = item.count;
-      }
-    });
+    if (cartItems.length > 0) {
+      cartItems.forEach((item: any) => {
+        if (item._id === product._id) {
+          productCount = item.count;
+        }
+      });
+    }
 
     if (productCount === 1) {
       cartItems = cartItems.filter((item: any) => item._id !== product._id);

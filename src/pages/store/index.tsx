@@ -12,7 +12,6 @@ import {
 import "./style.css";
 import theme from "@/app/theme";
 import Loading from "@/components/loading/loading";
-import { PostCategory } from "@/app/classes/post-category";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 import { ProductCategory } from "@/app/classes/product-category";
 

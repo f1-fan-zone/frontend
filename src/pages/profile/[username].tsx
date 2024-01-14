@@ -4,22 +4,15 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
-  Fab,
   Grid,
-  Link,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import "./style.css";
 import theme from "@/app/theme";
 import Loading from "@/components/loading/loading";
-import { PostCategory } from "@/app/classes/post-category";
 import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
-import { Post } from "@/app/classes/post";
-import Image from "next/image";
 import { NextRouter, withRouter } from "next/router";
-import moment from "moment";
-import { AddComment } from "@mui/icons-material";
 import { User } from "@/app/classes/user";
 
 interface WithRouterProps {

@@ -1,3 +1,4 @@
+import { Order } from "@/app/classes/order";
 import { Post } from "@/app/classes/post";
 
 export class F1FanZoneApi {
@@ -150,6 +151,26 @@ export class F1FanZoneApi {
       },
       body: JSON.stringify(post),
     });
+
+    return await response.json();
+  }
+
+  public static async createOrder(order: Order): Promise<any> {
+    const response = await fetch(`${F1FanZoneApi.API_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    });
+
+    return await response.json();
+  }
+
+  public static async getUserOrders(userId: string): Promise<any> {
+    const response = await fetch(
+      `${F1FanZoneApi.API_URL}/orders/user/${userId}`,
+    );
 
     return await response.json();
   }

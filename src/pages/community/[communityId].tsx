@@ -18,7 +18,7 @@ import { F1FanZoneApi } from "@/app/api/f1-fan-zone/f1-fan-zone-api";
 import { Post } from "@/app/classes/post";
 import { NextRouter, withRouter } from "next/router";
 import moment from "moment";
-import { Add, AddComment, PostAdd } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { User } from "@/app/classes/user";
 
 interface WithRouterProps {
