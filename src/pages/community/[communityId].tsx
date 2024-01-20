@@ -6,6 +6,7 @@ import {
   CardContent,
   Fab,
   Grid,
+  CssBaseline,
   Link,
   ThemeProvider,
   Typography,
@@ -70,6 +71,7 @@ class CommunityPage extends Component<IProps, IState> {
 
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid container spacing={2}>
           <Grid item xs={12} my={2} mx={2}>

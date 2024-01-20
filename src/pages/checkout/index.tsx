@@ -4,6 +4,7 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
+  CssBaseline,
   Grid,
   TextField,
   ThemeProvider,
@@ -83,6 +84,7 @@ class CheckoutPage extends Component<IProps, IState> {
 
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <PayPalScriptProvider options={{ clientId: "test", currency: "EUR" }}>
           <Grid container spacing={1}>

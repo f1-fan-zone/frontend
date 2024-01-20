@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   Grid,
+  CssBaseline,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -39,6 +40,7 @@ export default class PreviousSeasonsPage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid container spacing={2}>
           {this.state.seasons.map((season) => (

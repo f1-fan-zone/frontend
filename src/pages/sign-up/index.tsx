@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Grid,
+  CssBaseline,
   Link,
   TextField,
   ThemeProvider,
@@ -99,6 +100,7 @@ export default class SignUpPage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid
           container

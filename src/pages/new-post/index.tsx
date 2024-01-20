@@ -1,10 +1,11 @@
 "use client";
 import Header from "@/components/header/header";
-import { ChangeEventHandler, Component } from "react";
+import { Component } from "react";
 import {
   Card,
   CardContent,
   Fab,
+  CssBaseline,
   Grid,
   Link,
   TextField,
@@ -161,6 +162,7 @@ class NewPostPage extends Component<IProps, IState> {
 
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
 
         <Grid container className="new-post-page">

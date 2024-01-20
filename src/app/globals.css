@@ -8,11 +8,6 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-body {
-  color: var(--material-themesyslighton-primary);
-  background: var(--material-themesyslighton-primary);
-}
-
 :root {
   --material-theme-body-large-font-family: "Roboto-Regular", Helvetica;
   --material-theme-body-large-font-size: 16px;

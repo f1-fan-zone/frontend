@@ -27,6 +27,12 @@ const theme = createTheme({
   },
 });
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
+
 declare module "@mui/material/styles" {
   interface Theme {
     status: {
@@ -41,4 +47,17 @@ declare module "@mui/material/styles" {
   }
 }
 
-export default theme;
+let isDarkTheme = () => {
+  if (typeof window !== "undefined") {
+    let settings = localStorage.getItem("settings");
+    if (settings) {
+      let parsedSettings = JSON.parse(settings);
+      return parsedSettings.darkMode ? darkTheme : theme;
+    } else {
+      return theme;
+    }
+  }
+  return theme;
+};
+
+export default isDarkTheme;

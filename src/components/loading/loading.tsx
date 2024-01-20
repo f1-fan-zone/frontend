@@ -1,7 +1,8 @@
-import { Typography } from "@mui/material";
+import { CssBaseline, ThemeProvider, Typography } from "@mui/material";
 import { Component } from "react";
 import ReactLoading from "react-loading";
 import "./style.css";
+import theme from "@/app/theme";
 
 export default class Loading extends Component<any, any> {
   randomFacts = [
@@ -73,11 +74,13 @@ export default class Loading extends Component<any, any> {
   render() {
     return (
       <div className="centered">
-        <ReactLoading type="spin" color="red" />
-        <br />
-        <Typography variant="body1" color="text.secondary">
-          {this.state.randomFact}
-        </Typography>
+        <ThemeProvider theme={theme}>
+          <ReactLoading type="spin" color="red" />
+          <br />
+          <Typography variant="body1" color="text.secondary">
+            {this.state.randomFact}
+          </Typography>
+        </ThemeProvider>
       </div>
     );
   }

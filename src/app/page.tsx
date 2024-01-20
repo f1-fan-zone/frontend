@@ -4,6 +4,7 @@ import { Component } from "react";
 import {
   Card,
   CardContent,
+  CssBaseline,
   Grid,
   ThemeProvider,
   Typography,
@@ -57,6 +58,7 @@ export default class HomePage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid container spacing={2}>
           <Grid item xs={12} my={2} mx={2}>

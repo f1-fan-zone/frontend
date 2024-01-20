@@ -7,6 +7,7 @@ import {
   CardMedia,
   Fab,
   Grid,
+  CssBaseline,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -75,6 +76,7 @@ class ShoppingCartPage extends Component<IProps, IState> {
 
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <div className="shopping-cart-page">
           <Grid container spacing={2}>

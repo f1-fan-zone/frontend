@@ -7,6 +7,7 @@ import {
   CardContent,
   Grid,
   Link,
+  CssBaseline,
   TextField,
   ThemeProvider,
   Typography,
@@ -75,6 +76,7 @@ export default class SignInPage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid
           container

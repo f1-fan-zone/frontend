@@ -6,6 +6,7 @@ import {
   CardContent,
   Grid,
   Link,
+  CssBaseline,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -40,6 +41,7 @@ export default class StorePage extends Component<IProps, IState> {
   render() {
     return !this.state.showLoading ? (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header></Header>
         <Grid container spacing={2}>
           <Grid item xs={12} my={2} mx={2}>
