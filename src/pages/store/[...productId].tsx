@@ -72,25 +72,16 @@ class PostPage extends Component<IProps, IState> {
     let cart = localStorage.getItem("cart");
     let cartItems = cart ? JSON.parse(cart) : [];
     let product = this.state.product;
-    let productExists = false;
+    let productExists = this.checkIfProductExistsInCart();
 
-    if (cartItems.length > 0) {
-      cartItems.forEach((item: any) => {
-        if (item._id === product._id) {
-          productExists = true;
-          item.count++;
-        } else {
-          cartItems.push({
-            ...product,
-            count: 1,
-          });
-        }
-      });
-    } else {
+    if (!productExists) {
       cartItems.push({
         ...product,
         count: 1,
       });
+    } else {
+      let item = cartItems.filter((item: any) => item._id === product._id);
+      item[0].count++;
     }
 
     if (!productExists) {
@@ -115,6 +106,8 @@ class PostPage extends Component<IProps, IState> {
       cartItems.forEach((item: any) => {
         if (item._id === product._id) {
           productExists = true;
+        } else {
+          productExists = false;
         }
       });
     }

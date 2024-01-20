@@ -126,7 +126,7 @@ class ShoppingCartPage extends Component<IProps, IState> {
                                       {product.description}
                                     </Typography>
                                     <Typography variant="body1" component="p">
-                                      €{product.price.toFixed(2)}
+                                      <b>€{product.price.toFixed(2)}</b>
                                     </Typography>
                                     <Typography variant="body1" component="p">
                                       Quantity: {product.count}
