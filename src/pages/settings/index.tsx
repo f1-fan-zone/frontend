@@ -85,6 +85,7 @@ class SettingsPage extends Component<IProps, IState> {
                     settings.darkMode = e.target.checked;
                     localStorage.setItem("settings", JSON.stringify(settings));
                     this.setState({ settings });
+                    window.location.reload();
                   }}
                 />
               </CardContent>

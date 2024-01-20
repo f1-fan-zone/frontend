@@ -30,6 +30,24 @@ const theme = createTheme({
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: {
+      main: "#FF2A26",
+    },
+    secondary: {
+      main: "#FFDAD4",
+    },
+    warning: {
+      main: "#ff5722",
+    },
+    success: {
+      main: "#4caf50",
+    },
+    info: {
+      main: "#2196f3",
+    },
+    error: {
+      main: "#f44336",
+    },
   },
 });
 
